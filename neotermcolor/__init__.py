@@ -97,8 +97,6 @@ def colored(text, color=None, on_color=None, attrs=None, readline_safe=False):
 
         fmt_str = '{}{}m'
 
-        ESC = '\033['
-
         if readline_safe or readline_always_safe:
             fmt_str = '\001' + fmt_str + '\002'
 
@@ -111,6 +109,7 @@ def colored(text, color=None, on_color=None, attrs=None, readline_safe=False):
 
             if isinstance(color, str):
                 c = COLORS[color]
+                ESC = '\033['
             else:
                 c = color
                 ESC = '\x1b[38;5;'
@@ -124,6 +123,7 @@ def colored(text, color=None, on_color=None, attrs=None, readline_safe=False):
 
             if isinstance(on_color, str):
                 c = HIGHLIGHTS[on_color]
+                ESC = '\033['
             else:
                 c = on_color
                 ESC = '\x1b[48;5;'
