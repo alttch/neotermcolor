@@ -104,6 +104,9 @@ attributes:
     neotermcolor.cprint('ERROR MESSAGE 2', '@error')
 ```
 
+Note: if you specify both style and e.g. attrs, the style attrs will be
+overriden.
+
 ### Single attribute can now be specified as a string
 
 ```python
