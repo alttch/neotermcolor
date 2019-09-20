@@ -129,7 +129,8 @@ def colored(text,
             color = None
 
         if style is not None:
-            c, o, a = STYLES[style]
+            c, o, a = STYLES[style[1:] if \
+                    isinstance(style, str) and style.startswith('@') else style]
             if color is None:
                 color = c
             if on_color is None:
@@ -261,8 +262,8 @@ def test():
     set_style('error', color='red', attrs='bold')
     cprint('ERROR TEXT', style='error')
     set_style('info', color=157)
-    # test style overriding
-    cprint('INFO TEXT', color='white', style='info')
+    # test style overriding and '@' in style (wrong but should work)
+    cprint('INFO TEXT', color='white', style='@info')
 
 
 if platform.system().lower() == 'windows':
@@ -276,3 +277,6 @@ if platform.system().lower() == 'windows':
         if windll.kernel32.GetConsoleMode(c_int(hStdout), byref(mode)):
             mode = c_int(mode.value | ENABLE_VIRTUAL_TERMINAL_PROCESSING)
             windll.kernel32.SetConsoleMode(c_int(hStdout), mode)
+
+if __name__ == '__main__':
+    test()
