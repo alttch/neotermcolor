@@ -15,9 +15,9 @@ import os
 import sys
 import platform
 
-VERSION = (2, 0, 4)
+VERSION = (2, 0, 5)
 
-__version__ = '2.0.4'
+__version__ = '2.0.5'
 
 ATTRIBUTES = dict(
     list(
