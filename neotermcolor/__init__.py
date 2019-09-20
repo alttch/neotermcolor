@@ -15,9 +15,9 @@ import os
 import sys
 import platform
 
-VERSION = (2, 0, 2)
+VERSION = (2, 0, 3)
 
-__version__ = '2.0.2'
+__version__ = '2.0.3'
 
 ATTRIBUTES = dict(
     list(
@@ -79,7 +79,7 @@ def colored(text, color=None, on_color=None, attrs=None, readline_safe=False):
         on_red, on_green, on_yellow, on_blue, on_magenta, on_cyan, on_white.
 
     Available attributes:
-        bold, dark, underline, blink, reverse, concealed.
+        normal, bold, dark, underline, blink, reverse, concealed.
 
     Example:
         colored('Hello, World!', 'red', 'on_grey', ['blue', 'blink'])
@@ -132,7 +132,8 @@ def colored(text, color=None, on_color=None, attrs=None, readline_safe=False):
 
         if attrs is not None:
             for attr in [attrs] if isinstance(attrs, str) else attrs:
-                text = fmt_str.format('\033[', ATTRIBUTES[attr], text)
+                if attr != '' and attr != 'normal':
+                    text = fmt_str.format('\033[', ATTRIBUTES[attr], text)
 
         if readline_safe or readline_always_safe:
             text += '\001' + RESET + '\002'

@@ -44,7 +44,7 @@ When you mix ANSI color codes with readline input, it may cause a problem.
 neotermcolor has a workaround:
 
 * new param for **cprint** and **colored**: *readline_safe=True*
-* you may also turn on readline-safe colorize by default, setting
+* you may also turn on readline-safe colorizing by default, setting
 
 ```python
     import neotermcolor
