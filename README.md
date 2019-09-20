@@ -91,12 +91,12 @@ detect terminal with 256-color support or when it's forced by user:
 
 ### Single attribute can now be specified as a string
 
-'''python
+```python
     # as list or tuple
     cprint('test', attrs=['bold'])
     # as a string
     cprint('test', attrs='bold')
-'''
+```
 
 ### How to use it instead of old termcolor in the existing projects
 
