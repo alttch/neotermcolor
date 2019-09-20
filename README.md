@@ -92,8 +92,8 @@ detect terminal with 256-color support or when it's forced by user:
 ### It has styles
 
 Styles are alternative to classical defining a "style" for certain type of
-messages via *functools.partial*. A style may contain color, on_color and
-attributes:
+messages with *functools.partial* or *lambda*. A style may contain color,
+on_color and attributes:
 
 ```python
     import neotermcolor
