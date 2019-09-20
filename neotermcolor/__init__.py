@@ -48,6 +48,8 @@ COLORS = dict(
 
 PALETTE = {}
 
+STYLES = {}
+
 RESET = '\033[0m'
 '''
 If true, text is not colored if stdout/stderr is not a TTY
@@ -69,7 +71,26 @@ def set_color(name, code):
     PALETTE[name] = code
 
 
-def colored(text, color=None, on_color=None, attrs=None, readline_safe=False):
+def set_style(name, color=None, on_color=None, attrs=None):
+    '''
+    Define a style
+
+    Args:
+        color: text color
+        on_color: highlights color
+        attrs: additional attributes
+    '''
+    if isinstance(name, str) and name.startswith('@'):
+        name = name[1:]
+    STYLES[name] = (color, on_color, attrs)
+
+
+def colored(text,
+            color=None,
+            on_color=None,
+            attrs=None,
+            style=None,
+            readline_safe=False):
     """Colorize text.
 
     Available text colors:
@@ -90,6 +111,7 @@ def colored(text, color=None, on_color=None, attrs=None, readline_safe=False):
         color: text color
         on_color: highlights color
         attrs: additional attributes
+        style: pre-defined style (you may also choose style as color='@NAME')
         readline_safe: if True, additional escape codes are used to avoid
                        problems with readline library
     """
@@ -101,6 +123,19 @@ def colored(text, color=None, on_color=None, attrs=None, readline_safe=False):
             fmt_str = '\001' + fmt_str + '\002'
 
         fmt_str += '{}'
+
+        if isinstance(color, str) and color.startswith('@'):
+            style = color[1:]
+            color = None
+
+        if style is not None:
+            c, o, a = STYLES[style]
+            if color is None:
+                color = c
+            if on_color is None:
+                on_color = o
+            if attrs is None:
+                attrs = a
 
         if color is not None:
 
@@ -146,6 +181,7 @@ def cprint(text,
            color=None,
            on_color=None,
            attrs=None,
+           style=None,
            readline_safe=False,
            **kwargs):
     """Print colorize text.
@@ -153,7 +189,8 @@ def cprint(text,
     It accepts arguments of print function.
     """
 
-    print((colored(text, color, on_color, attrs, readline_safe)), **kwargs)
+    print((colored(text, color, on_color, attrs, style, readline_safe)),
+          **kwargs)
 
 
 def test():
@@ -218,6 +255,14 @@ def test():
     set_color('red', 197)
     cprint('Red color is now purple', 'red')
     print(('-' * 78))
+    print('Test styles')
+    set_style('warning', color=208, attrs='bold')
+    cprint('WARNING TEXT', color='@warning')
+    set_style('error', color='red', attrs='bold')
+    cprint('ERROR TEXT', style='error')
+    set_style('info', color=157)
+    # test style overriding
+    cprint('INFO TEXT', color='white', style='info')
 
 
 if platform.system().lower() == 'windows':

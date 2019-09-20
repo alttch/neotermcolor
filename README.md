@@ -89,6 +89,21 @@ detect terminal with 256-color support or when it's forced by user:
     neotermcolor.cprint('Red color is now purple', 'red')
 ```
 
+### It has styles
+
+Styles are alternative to classical defining a "style" for certain type of
+messages via *functools.partial*. A style may contain color, on_color and
+attributes:
+
+```python
+    import neotermcolor
+
+    neotermcolor.set_style('error', color='red', attrs='bold')
+    neotermcolor.cprint('ERROR MESSAGE', style='error')
+    # or
+    neotermcolor.cprint('ERROR MESSAGE 2', '@error')
+```
+
 ### Single attribute can now be specified as a string
 
 ```python
