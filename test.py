@@ -1,0 +1,3 @@
+import neotermcolor
+
+neotermcolor.test()

@@ -1,0 +1,7 @@
+__pycache__
+neotermcolor.egg-info
+build
+dist
+Makefile
+TODO.todo
+*.pyc
