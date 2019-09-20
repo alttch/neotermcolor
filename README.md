@@ -26,6 +26,12 @@ for i in range(10):
 cprint("Attention!", 'red', attrs=['bold'], file=sys.stderr)
 ```
 
+## Installation
+
+```shell
+    pip3 install neotermcolor
+```
+
 ## New features
 
 ### It works in Windows terminal
