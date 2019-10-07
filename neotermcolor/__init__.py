@@ -15,9 +15,9 @@ import os
 import sys
 import platform
 
-VERSION = (2, 0, 5)
+VERSION = (2, 0, 7)
 
-__version__ = '2.0.5'
+__version__ = '2.0.7'
 
 ATTRIBUTES = dict(
     list(
@@ -115,6 +115,7 @@ def colored(text,
         readline_safe: if True, additional escape codes are used to avoid
                        problems with readline library
     """
+    text = str(text)
     if os.getenv('ANSI_COLORS_DISABLED') is None and (not tty_aware or _isatty):
 
         fmt_str = '{}{}m'
