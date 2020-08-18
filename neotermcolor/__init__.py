@@ -130,8 +130,9 @@ def colored(text,
             color = None
 
         if style is not None:
-            c, o, a = STYLES[style[1:] if \
-                    isinstance(style, str) and style.startswith('@') else style]
+            c, o, a = STYLES.get(
+                style[1:] if isinstance(style, str) and style.startswith('@')
+                else style, (None, None, None))
             if color is None:
                 color = c
             if on_color is None:
@@ -265,6 +266,7 @@ def test():
     set_style('info', color=157)
     # test style overriding and '@' in style (wrong but should work)
     cprint('INFO TEXT', color='white', style='@info')
+    cprint('MISSING STYLE TEXT', style='@nostyle')
 
 
 if platform.system().lower() == 'windows':
