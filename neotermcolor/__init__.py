@@ -14,10 +14,13 @@
 import os
 import sys
 import platform
+import logging
 
-VERSION = (2, 0, 8)
+logger = logging.getLogger('neotermcolor')
 
-__version__ = '2.0.8'
+VERSION = (2, 0, 9)
+
+__version__ = '2.0.9'
 
 ATTRIBUTES = dict(
     list(
@@ -269,17 +272,20 @@ def test():
     cprint('MISSING STYLE TEXT', style='@nostyle')
 
 
-if platform.system().lower() == 'windows':
-    from ctypes import windll, c_int, byref, c_void_p
-    ENABLE_VIRTUAL_TERMINAL_PROCESSING = 0x0004
-    INVALID_HANDLE_VALUE = c_void_p(-1).value
-    STD_OUTPUT_HANDLE = c_int(-11)
-    hStdout = windll.kernel32.GetStdHandle(STD_OUTPUT_HANDLE)
-    if hStdout != INVALID_HANDLE_VALUE:
-        mode = c_int(0)
-        if windll.kernel32.GetConsoleMode(c_int(hStdout), byref(mode)):
-            mode = c_int(mode.value | ENABLE_VIRTUAL_TERMINAL_PROCESSING)
-            windll.kernel32.SetConsoleMode(c_int(hStdout), mode)
+try:
+    if platform.system().lower() == 'windows':
+        from ctypes import windll, c_int, byref, c_void_p
+        ENABLE_VIRTUAL_TERMINAL_PROCESSING = 0x0004
+        INVALID_HANDLE_VALUE = c_void_p(-1).value
+        STD_OUTPUT_HANDLE = c_int(-11)
+        hStdout = windll.kernel32.GetStdHandle(STD_OUTPUT_HANDLE)
+        if hStdout != INVALID_HANDLE_VALUE:
+            mode = c_int(0)
+            if windll.kernel32.GetConsoleMode(c_int(hStdout), byref(mode)):
+                mode = c_int(mode.value | ENABLE_VIRTUAL_TERMINAL_PROCESSING)
+                windll.kernel32.SetConsoleMode(c_int(hStdout), mode)
+except Exception as e:
+    logger.debug(e)
 
 if __name__ == '__main__':
     test()
