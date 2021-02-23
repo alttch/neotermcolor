@@ -16,11 +16,9 @@ import sys
 import platform
 import logging
 
-logger = logging.getLogger('neotermcolor')
+VERSION = (2, 0, 10)
 
-VERSION = (2, 0, 9)
-
-__version__ = '2.0.9'
+__version__ = '2.0.10'
 
 ATTRIBUTES = dict(
     list(
@@ -273,6 +271,7 @@ def test():
 
 
 try:
+    # works on almost all Windows
     if platform.system().lower() == 'windows':
         from ctypes import windll, c_int, byref, c_void_p
         ENABLE_VIRTUAL_TERMINAL_PROCESSING = 0x0004
@@ -284,8 +283,14 @@ try:
             if windll.kernel32.GetConsoleMode(c_int(hStdout), byref(mode)):
                 mode = c_int(mode.value | ENABLE_VIRTUAL_TERMINAL_PROCESSING)
                 windll.kernel32.SetConsoleMode(c_int(hStdout), mode)
-except Exception as e:
-    logger.debug(e)
+except:
+    # helps sometimes
+    try:
+        import ctypes
+        kernel32 = ctypes.windll.kernel32
+        kernel32.SetConsoleMode(kernel32.GetStdHandle(-11), 7)
+    except:
+        pass
 
 if __name__ == '__main__':
     test()
