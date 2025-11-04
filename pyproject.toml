@@ -1,0 +1,27 @@
+[project]
+name = 'neotermcolor'
+description = 'Fork of termcolor library'
+classifiers = [
+    'Programming Language :: Python :: 3',
+    'Topic :: Software Development :: Libraries',
+    'Topic :: Text Processing',
+    'Topic :: Terminals',
+]
+authors = [
+    {name = 'Altertech', email = 'div@altertech.com'}
+]
+readme = {file = 'README.md', content-type = 'text/markdown'}
+license = 'MIT'
+license-files = ['LICENSE']
+dynamic = ['version']
+
+[project.urls]
+'Source' = 'https://github.com/alttch/neotermcolor'
+'Issues' = 'https://github.com/alttch/neotermcolor/issues'
+
+[build-system]
+requires = ['setuptools >= 77.0.3']
+build-backend = 'setuptools.build_meta'
+
+[tool.setuptools.dynamic.version]
+attr = 'neotermcolor.__version__'
