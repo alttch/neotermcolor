@@ -16,9 +16,9 @@ import sys
 import platform
 import logging
 
-VERSION = (2, 0, 10)
+VERSION = (2, 0, 11)
 
-__version__ = '2.0.10'
+__version__ = '2.0.11'
 
 ATTRIBUTES = dict(
     list(
